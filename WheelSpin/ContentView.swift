@@ -32,9 +32,11 @@ struct Pie: Shape {
 }
 
 struct ContentView: View {
-    let colors: [Color] = [.blue, .black, .blue, .black, .blue, .black, .blue, .black, .blue, .black]
+    let colors: [Color] = [.blue, .red, .white, .orange, .clear, .cyan, .blue, .black, .blue, .black, .brown, .blue]
     
     @State var count = 0
+    @State var spin: Double = 0
+    
     var body: some View {
         
         VStack {
@@ -44,7 +46,36 @@ struct ContentView: View {
                         .fill(colors[index % colors.count])
                 }
             }
+            .rotationEffect(.degrees(spin))
+            
+            Spacer()
+            
+            Button {
+                if count < colors.count {
+                    count += 1
+                } else {
+                    count = 0
+                }
+            } label: {
+                Text("Add Color")
+            }
+            .frame(width: 200, height: 50)
+            .background(.black)
+            .cornerRadius(10)
+            
+            Button {
+                withAnimation(.spring(response: 2, dampingFraction: 1.5)) {
+                    spin += 360
+                }
+            } label: {
+                <#code#>
+            }
+            .frame(width: 200, height: 50)
+            .background(.black)
+            .cornerRadius(10)
+
         }
+        .padding()
     }
 }
 

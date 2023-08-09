@@ -32,53 +32,60 @@ struct Pie: Shape {
 }
 
 struct ContentView: View {
-    let colors: [Color] = [.red, .blue, .green, .yellow, .purple, .orange, .brown, .pink, .purple, .primary, .gray, .mint, .red, .blue, .green, .yellow, .pink, .orange]
+    let colors: [Color] = [Color("main"), Color("main1"), Color("main2"), Color("main3"), Color("main"), Color("main1"), Color("main2"), Color("main3"), Color("main"), Color("main1"), Color("main2"), Color("main3")]
     
     @State var spin : Double = 0
     @State var count = 0
     
     var body: some View {
         
-        VStack {
-            ZStack {
-                ForEach(0..<count, id: \.self) { index in
-                    Pie(startAngle: .degrees(Double(index) / Double(count) * 360), endAngle: .degrees(Double(index + 1) / Double(count) * 360))
-                        .fill(colors[index % colors.count])
-                }
-            }
-           .rotationEffect(.degrees(spin))
-            
-           Spacer()
-            
-            HStack {
-                Button {
-                    if count < colors.count {
-                        count += 1
-                    } else {
-                        count = 0
+        ZStack {
+            Color.gray.opacity(0.7)
+            VStack {
+                ZStack {
+                    ForEach(0..<count, id: \.self) { index in
+                        Pie(startAngle: .degrees(Double(index) / Double(count) * 360), endAngle: .degrees(Double(index + 1) / Double(count) * 360))
+                            .fill(colors[index % colors.count])
                     }
-                } label: {
-                    Text("Add Color")
                 }
-                .foregroundColor(.red)
-                .frame(width: 200, height: 50)
-                .background(.black)
-                .cornerRadius(10)
+                .rotationEffect(.degrees(spin))
                 
-                Button {
-                    withAnimation(.spring(response: 2, dampingFraction: 1.5)) {
-                        spin += 360
+                Spacer()
+                
+                HStack {
+                    Button {
+                        if count < colors.count {
+                            count += 1
+                        } else {
+                            count = 0
+                        }
+                    } label: {
+                        Text("Add Color")
                     }
-                } label: {
-                    Text("Spin")
+                    .font(.system(size: 18, weight: .bold, design: .serif))
+                    .foregroundColor(.orange.opacity(0.8))
+                    .frame(width: 200, height: 50)
+                    .background(Color("main3").opacity(0.9))
+                    .cornerRadius(10)
+                    
+                    Button {
+                        withAnimation(.spring(response: 2, dampingFraction: 2)) {
+                            spin += 360
+                        }
+                    } label: {
+                        Text("Spin")
+                    }
+                    .font(.system(size: 18, weight: .bold, design: .serif))
+                    .foregroundColor(.orange.opacity(0.8))
+                    .frame(width: 200, height: 50)
+                    .background(Color("main3").opacity(0.9))
+                    .cornerRadius(10)
                 }
-                .foregroundColor(.red)
-                .frame(width: 200, height: 50)
-                .background(.black)
-                .cornerRadius(10)
+                .padding()
             }
+            .padding()
         }
-        .padding()
+        .ignoresSafeArea()
     }
 }
 
